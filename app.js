@@ -1,12 +1,8 @@
 // color a las tarjetas:
-
 // arrays con colores
 let colors = generateRandomColors(6)
 //seleccion de los cuadrados:
 let squares = document.querySelectorAll(".square")
-
-
-
 
 // color aleatorio  (por el momento asignado manual)
 //👩‍🏫👨‍🏫 Más adelante, la Variable tendrá un color aleatorio (seleccionado del Arreglo).
@@ -25,16 +21,12 @@ let h1 = document.querySelector("h1") /** encabezado h1 */
         // recorrido y asignacion de colores a cada cuadrado
         squares[i].style.background = colors[i] // color a cada cuadrado
         squares[i].addEventListener("click",()=>{
-    
             let clickedColor = squares[i].style.background
-           
             if (clickedColor === pickedColor) {
-                
                 msj.innerText = "¡Correcto!"
                 btnReset.innerText = "Play Again?"
                 //color de fondo ganador a h1 
                 h1.style.background = pickedColor
-
                 // funcion iguala los cuadrados al color ganador
                 changeColors(pickedColor)
             } else {
@@ -43,7 +35,6 @@ let h1 = document.querySelector("h1") /** encabezado h1 */
                 // uso de window.getComputedStyle()  para traer el valor del estilo 
                 squares[i].style.background =window.getComputedStyle(document.body).backgroundColor
             }
-
         })
     }
 
@@ -81,9 +72,12 @@ function generateRandomColors(n){
 
 /**BOTONES */
 
-function reset() {
+let numberOfSquares = 6 
 
-    colors = generateRandomColors(6);
+// boton nuevos colores
+function reset(numberOfSquares) {
+
+    colors = generateRandomColors(numberOfSquares);
     pickedColor = colors[pickColor()];
     colorDisplay.textContent = pickedColor;
     // mensajes reset
@@ -92,16 +86,27 @@ function reset() {
     // reset h1
     h1.style.background = window.getComputedStyle(document.body).backgroundColor;
 
-    for (let i = 0; i < colors.length; i++) {
-        squares[i].style.background = colors[i];
+    
+    for (let i = 0; i < squares.length; i++) {
+        // si hay un color en i, o no undefined
+        if (colors[i]) {
+            squares[i].style.display = "block";
+            squares[i].style.background = colors[i];
+        } else {
+            squares[i].style.display = "none";
+        }
     }
    
 }
 
 
 btnReset.addEventListener("click",function() {
-    reset()
+    reset(numberOfSquares)
 })
+
+
+
+
 
 //----
 
@@ -112,24 +117,20 @@ btnHard = document.getElementById("hardButton")
 
 btnEasy.addEventListener("click",function(){
     btnHard.classList.remove("selected")
-    // threeColors = generateRandomColors(3)
-  
-    for (let i = 0; i < colors.length; i++) { //! cambiar
-        if (i >= 3) {
-            squares[i].style.display = "none";
-        } else {
-            squares[i].style.background = colors[i];
-            squares[i].style.display = "block"; // Asegurarse de que los primeros tres sean visibles
-        }
-    }
+    numberOfSquares = 3
 
-    //!  falta botones easy y hard
+    reset(numberOfSquares)
+    
 
 })
 
 
 btnHard.addEventListener("click",function(){
     btnEasy.classList.add("selected")
+    numberOfSquares = 6
+
+    reset(numberOfSquares)
+
 })
 
 
