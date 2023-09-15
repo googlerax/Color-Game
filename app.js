@@ -114,7 +114,7 @@ btnEasy.addEventListener("click",function(){
     btnHard.classList.remove("selected")
     // threeColors = generateRandomColors(3)
   
-    for (let i = 0; i < colors.length; i++) {
+    for (let i = 0; i < colors.length; i++) { //! cambiar
         if (i >= 3) {
             squares[i].style.display = "none";
         } else {
